@@ -21,6 +21,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 /**
@@ -28,6 +29,7 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author Ruisu's
  */
 @Data
+@RequiredArgsConstructor
 @Entity
 @Table(name="anime")
 public class Anime {
@@ -52,9 +54,11 @@ public class Anime {
     private LocalDateTime year;
     
     @CreationTimestamp
+    @Column(name="createdate")
     private LocalDateTime createDate;
     
     @UpdateTimestamp
+    @Column(name="updatedate")
     private LocalDateTime updateDate;
     
     @OneToMany(mappedBy ="anime")

@@ -42,9 +42,11 @@ public class CharacterM {
     private String image;
     
     @CreationTimestamp
-    private LocalDateTime creationDate;
+    @Column(name = "createdate")
+    private LocalDateTime createDate;
     
     @UpdateTimestamp
+    @Column(name = "updatedate")
     private LocalDateTime updateTime;
     
     @ManyToOne()

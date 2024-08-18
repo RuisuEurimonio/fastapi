@@ -26,21 +26,25 @@ public class AnimeService {
         return animeR.getAllAnime();
     }
     
-    public Anime getById(int id){
+    public Anime getById(Integer id){
+        if(id == null) throw new CustomException("El ud es nulo");
         Anime animeDB = animeR.getById(id).orElseThrow(()-> new CustomException("No se encontró ningún anime con id: "+id));
         return animeDB;
     }
     
     public Anime createAnime(Anime anime){
+        if(anime == null) throw new CustomException("No se ingresaron datos.");
         return animeR.createAnime(anime);
     }
     
     public Anime updateAnime(Anime anime){
+        if(anime == null) throw new CustomException("No se ingresaron datos.");
         animeR.getById(anime.getId()).orElseThrow(()-> new CustomException("No se encontró ningún anime con el id: "+anime.getId() ));
         return animeR.updateAnime(anime);
     }
     
-    public void deleteByIdAnime(int id){
+    public void deleteByIdAnime(Integer id){
+        if(id == null) throw new CustomException("El ud es nulo");
         animeR.getById(id).orElseThrow(()-> new CustomException("No se encontró ningún anime con el id: "+id));
         animeR.deleteByIdAnime(id);
     }

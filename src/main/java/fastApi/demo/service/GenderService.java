@@ -9,6 +9,7 @@ import fastApi.demo.CustomErrors.CustomException;
 import fastApi.demo.Repository.GenderRepository;
 import fastApi.demo.models.Gender;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GenderService {
     
+    @Autowired
     private GenderRepository genderR;
     
     public List<Gender> getAll(){
