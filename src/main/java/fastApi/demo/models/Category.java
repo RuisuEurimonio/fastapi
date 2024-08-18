@@ -14,6 +14,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Data;
@@ -32,7 +34,13 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
+    @Size(min = 5, max = 50, message = "El nombre debe tener entre 5 y 50 carácteres.")
+    @NotBlank
     private String name;
+    
+    @Size(min = 5, max = 150, message = "La descripción debe tener entre 5 y 150 carácteres")
+    @NotBlank
     private String description;
     
     @CreationTimestamp
