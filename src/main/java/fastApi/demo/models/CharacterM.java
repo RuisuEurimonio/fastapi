@@ -1,0 +1,58 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package fastApi.demo.models;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import java.time.LocalDateTime;
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+/**
+ *
+ * @author Ruisu's
+ */
+
+@Data
+@Entity
+@Table(name="character")
+public class CharacterM {
+    
+    @Id
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    private int id;
+    private String name;
+    
+    @ManyToOne()
+    @JoinColumn(name="gender")
+    private Gender gender;
+    
+    @Column(nullable = true)
+    private String image;
+    
+    @CreationTimestamp
+    private LocalDateTime creationDate;
+    
+    @UpdateTimestamp
+    private LocalDateTime updateTime;
+    
+    @ManyToOne()
+    @JoinColumn(name="anime")
+    private Anime anime;
+    
+    @ManyToOne
+    @JoinColumn(name="category")
+    private Category category;
+    
+}
