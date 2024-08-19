@@ -9,9 +9,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 import lombok.Data;
 
@@ -28,8 +28,13 @@ public class Gender {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    
     private char letter;
+    
+    @Size(min = 7, max = 15, message = "El nombre debe tener entre 9 a 15 carácteres.")
     private String name;
+    
+    @Size(min = 10, max = 50, message = "La descripción debe tener entre 10 a 50 carácteres.")
     private String description;
     
     @OneToMany(mappedBy = "gender")
