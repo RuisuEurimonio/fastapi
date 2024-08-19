@@ -7,11 +7,13 @@ package fastApi.demo.controller;
 
 import fastApi.demo.models.Anime;
 import fastApi.demo.service.AnimeService;
+import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,15 +44,16 @@ public class AnimeController {
     }
     
     @PostMapping("/create")
-    public ResponseEntity<Anime> createAnime(@RequestBody Anime anime){
+    public ResponseEntity<Anime> createAnime(@Valid @RequestBody Anime anime){
         return ResponseEntity.status(HttpStatus.CREATED).body(animeS.createAnime(anime));
     }
     
     @PutMapping("/update")
-    public ResponseEntity<Anime> updateAnime(@RequestBody Anime anime){
-        return ResponseEntity.status(HttpStatus.CONTINUE).body(animeS.updateAnime(anime));
+    public ResponseEntity<Anime> updateAnime(@Valid @RequestBody Anime anime){
+        return ResponseEntity.status(HttpStatus.CREATED).body(animeS.updateAnime(anime));
     }
     
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteAnime(@PathVariable("id") Integer id){
         animeS.deleteByIdAnime(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Anime con id "+id+" eliminado.");

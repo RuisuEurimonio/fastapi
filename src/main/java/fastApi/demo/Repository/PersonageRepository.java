@@ -5,36 +5,36 @@
  */
 package fastApi.demo.Repository;
 
-import fastApi.demo.JpaRepository.CharacterJpaRepository;
-import fastApi.demo.models.CharacterM;
+import fastApi.demo.models.Personage;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import fastApi.demo.JpaRepository.PersonageJpaRepository;
 
 /**
  *
  * @author Ruisu's
  */
 @Repository
-public class CharacterRepository {
+public class PersonageRepository {
     
     @Autowired
-    private CharacterJpaRepository categoryJR;
+    private PersonageJpaRepository categoryJR;
     
-    public List<CharacterM> getAllCharacters(){
+    public List<Personage> getAllCharacters(){
         return categoryJR.findAll();
     }
     
-    public Optional<CharacterM> getById(int id){
+    public Optional<Personage> getById(int id){
         return categoryJR.findById(id);
     }
     
-    public CharacterM createCharacter(CharacterM character){
+    public Personage createCharacter(Personage character){
         return categoryJR.save(character);
     }
     
-    public CharacterM updateCharacter(CharacterM character){
+    public Personage updateCharacter(Personage character){
         return categoryJR.save(character);
     }
     

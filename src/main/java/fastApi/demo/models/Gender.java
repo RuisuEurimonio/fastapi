@@ -33,6 +33,6 @@ public class Gender {
     private String description;
     
     @OneToMany(mappedBy = "gender")
-    private List<CharacterM> characters;
+    private List<Personage> personages;
     
 }

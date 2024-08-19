@@ -26,8 +26,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Data
 @Entity
-@Table(name="character")
-public class CharacterM {
+@Table(name="personage")
+public class Personage {
     
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -52,9 +52,5 @@ public class CharacterM {
     @ManyToOne()
     @JoinColumn(name="anime")
     private Anime anime;
-    
-    @ManyToOne
-    @JoinColumn(name="category")
-    private Category category;
-    
+
 }

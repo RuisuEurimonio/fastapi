@@ -8,6 +8,9 @@ package fastApi.demo.service;
 import fastApi.demo.CustomErrors.CustomException;
 import fastApi.demo.Repository.AnimeRepository;
 import fastApi.demo.models.Anime;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,7 +41,8 @@ public class AnimeService {
     }
     
     public Anime updateAnime(Anime anime){
-        if(anime == null) throw new CustomException("No se ingresaron datos.");
+        System.out.println(anime);
+        if(anime == null || anime.getName() == null) throw new CustomException("No se ingresaron datos.");
         animeR.getById(anime.getId()).orElseThrow(()-> new CustomException("No se encontró ningún anime con el id: "+anime.getId() ));
         return animeR.updateAnime(anime);
     }

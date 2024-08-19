@@ -5,13 +5,13 @@
  */
 package fastApi.demo.JpaRepository;
 
-import fastApi.demo.models.CharacterM;
+import fastApi.demo.models.Personage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Ruisu's
  */
-public interface CharacterJpaRepository extends JpaRepository<CharacterM, Integer>{
+public interface PersonageJpaRepository extends JpaRepository<Personage, Integer>{
     
 }

@@ -62,7 +62,7 @@ public class Anime {
     private LocalDateTime updateDate;
     
     @OneToMany(mappedBy ="anime")
-    private List<CharacterM> characters;
+    private List<Personage> personage;
     
     @ManyToMany
     @JoinTable(
