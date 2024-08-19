@@ -8,6 +8,8 @@ package fastApi.demo.controller;
 import fastApi.demo.CustomErrors.CustomException;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
  */
 @ControllerAdvice
 public class ErrorsController {
+    
+        private final static Logger logger = LogManager.getLogger(ErrorsController.class);
     
     @ExceptionHandler( MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleErrorArguments(MethodArgumentNotValidException ex){
@@ -42,7 +46,8 @@ public class ErrorsController {
     
     @ExceptionHandler( Exception.class )
     public ResponseEntity<String> handleExceptionCustom(Exception error){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error.getMessage());
+        logger.error(error.getMessage()+"\n");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ha sucedido un error, vuelvelo a intentar");
     }
     
 }

@@ -36,8 +36,13 @@ public class GenderService {
     }
     
     public Gender updateGender(Gender gender){
-        genderR.getByIdGender(gender.getId()).orElseThrow(()-> new CustomException("No se encontró ningún genero con el id: "+gender.getId()));
-        return genderR.updateGender(gender);
+        Gender genderDB = genderR.getByIdGender(gender.getId()).orElseThrow(()-> new CustomException("No se encontró ningún genero con el id: "+gender.getId()));
+        
+        if(gender.getLetter() != null) genderDB.setLetter(gender.getLetter());
+        if(gender.getName() != null) genderDB.setName(gender.getName());
+        if(gender.getDescription() != null) genderDB.setDescription(gender.getDescription());
+        
+        return genderR.updateGender(genderDB);
     }
     
     public void deleteGender(int id){

@@ -5,6 +5,7 @@
  */
 package fastApi.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,7 +46,7 @@ public class Anime {
     private String name;
     
     
-    private boolean finished;
+    private Boolean finished;
     
     @Column(nullable = true)
     @Size(min = 10, message = "El link de la imagen no es valido.")
@@ -63,6 +64,7 @@ public class Anime {
     private LocalDateTime updateDate;
     
     @OneToMany(mappedBy ="anime")
+    @JsonIgnoreProperties(value="anime")
     private List<Personage> personage;
     
     @ManyToMany
@@ -71,5 +73,6 @@ public class Anime {
             joinColumns = @JoinColumn(name="anime"),
             inverseJoinColumns = @JoinColumn(name="category")   
     )
+    @JsonIgnoreProperties(value="animes")
     private List<Category> categories;
 }

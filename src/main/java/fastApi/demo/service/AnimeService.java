@@ -9,7 +9,6 @@ import fastApi.demo.CustomErrors.CustomException;
 import fastApi.demo.Repository.AnimeRepository;
 import fastApi.demo.models.Anime;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,10 +40,16 @@ public class AnimeService {
     }
     
     public Anime updateAnime(Anime anime){
-        System.out.println(anime);
-        if(anime == null || anime.getName() == null) throw new CustomException("No se ingresaron datos.");
-        animeR.getById(anime.getId()).orElseThrow(()-> new CustomException("No se encontró ningún anime con el id: "+anime.getId() ));
-        return animeR.updateAnime(anime);
+        if(anime == null) throw new CustomException("No se ingresaron datos.");
+        Anime animeDB = animeR.getById(anime.getId()).orElseThrow(()-> new CustomException("No se encontró ningún anime con el id: "+anime.getId() ));
+        
+        if (anime.getName() != null) animeDB.setName(anime.getName());
+        if (anime.getCategories() != null ) animeDB.setCategories(anime.getCategories());
+        if (anime.getImage() != null) animeDB.setImage(anime.getImage());
+        if (anime.getFinished() != null) animeDB.setFinished(anime.getFinished());
+        if (anime.getYear() != null) animeDB.setYear(anime.getYear());
+        
+        return animeR.updateAnime(animeDB);
     }
     
     public void deleteByIdAnime(Integer id){

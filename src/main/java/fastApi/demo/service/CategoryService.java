@@ -37,8 +37,12 @@ public class CategoryService {
     }
     
     public Category updateCategory(Category category){
-        categoryR.getById(category.getId()).orElseThrow(() -> new CustomException("No se encontro la categoria a actualizar"));
-        return categoryR.updateCategory(category);
+        Category categoryDB = categoryR.getById(category.getId()).orElseThrow(() -> new CustomException("No se encontro la categoria a actualizar"));
+        
+        if(category.getName() != null) categoryDB.setName(category.getName());
+        if(category.getDescription() != null) categoryDB.setDescription(category.getDescription());
+        
+        return categoryR.updateCategory(categoryDB);
     }
     
     public void deleteCategory(Integer id){

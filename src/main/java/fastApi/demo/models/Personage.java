@@ -5,6 +5,7 @@
  */
 package fastApi.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,6 +37,7 @@ public class Personage {
     
     @ManyToOne()
     @JoinColumn(name="gender")
+    @JsonIgnoreProperties(value="personages")
     private Gender gender;
     
     @Column(nullable = true)
@@ -51,6 +53,7 @@ public class Personage {
     
     @ManyToOne()
     @JoinColumn(name="anime")
+    @JsonIgnoreProperties(value="personage")
     private Anime anime;
 
 }

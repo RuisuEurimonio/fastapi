@@ -5,6 +5,8 @@
  */
 package fastApi.demo.controller;
 
+import fastApi.demo.Validations.OnCreate;
+import fastApi.demo.Validations.OnUpdate;
 import fastApi.demo.models.Anime;
 import fastApi.demo.models.Category;
 import fastApi.demo.service.AnimeService;
@@ -14,6 +16,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,12 +48,12 @@ public class CategoryController {
     }
     
     @PostMapping("/create")
-    public ResponseEntity<Category> createAnime(@Valid @RequestBody Category category){
+    public ResponseEntity<Category> createAnime(@Validated(OnCreate.class) @RequestBody Category category){
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryS.createCategory(category));
     }
     
     @PutMapping("/update")
-    public ResponseEntity<Category> updateAnime(@Valid @RequestBody Category category){
+    public ResponseEntity<Category> updateAnime(@Validated(OnUpdate.class) @RequestBody Category category){
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryS.updateCategory(category));
     }
     

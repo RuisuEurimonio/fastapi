@@ -6,6 +6,8 @@
 package fastApi.demo.service;
 
 import fastApi.demo.CustomErrors.CustomException;
+import fastApi.demo.Repository.AnimeRepository;
+import fastApi.demo.Repository.GenderRepository;
 import fastApi.demo.Repository.PersonageRepository;
 import fastApi.demo.models.Personage;
 import java.util.List;
@@ -23,6 +25,12 @@ public class PersonageService {
     @Autowired
     private PersonageRepository personageR;
     
+    @Autowired
+    private AnimeRepository animeR;
+    
+    @Autowired
+    private GenderRepository genderR;
+    
     public List<Personage> getAll(){
         return personageR.getAllCharacters();
     }
@@ -36,6 +44,7 @@ public class PersonageService {
         if(personage == null || personage.getName() == null || personage.getGender() == null || personage.getAnime() == null){
             throw new CustomException("Ingresa el nombre, genero y anime");
         }
+        validateRelations(personage);
         return personageR.createCharacter(personage);
     }
     
@@ -43,12 +52,20 @@ public class PersonageService {
         if(personage == null || personage.getId() == null || personage.getName() == null || personage.getGender() == null || personage.getAnime() == null){
             throw new CustomException("Verifica que los campos no sean nulos.");
         }
+        Personage personageDB = personageR.getById(personage.getId()).orElseThrow(()-> new CustomException("El personaje a modificar no se encontro"));
+        personage.setCreateDate(personageDB.getCreateDate());
+        validateRelations(personage);
         return personageR.updateCharacter(personage);
     }
     
     public void deletePersonage(Integer id){
-        if(id == null) throw new CustomException("El id no puede ser nulo.");
+        personageR.getById(id).orElseThrow(()-> new CustomException("No se encontro ningun personaje con id: "+id));
         personageR.deleteByIdCharacter(id);
+    }
+    
+    public void validateRelations(Personage personage){
+        animeR.getById(personage.getAnime().getId()).orElseThrow(()-> new CustomException("No se encontro anime con el id: " + personage.getAnime().getId()));
+        genderR.getByIdGender(personage.getGender().getId()).orElseThrow(()-> new CustomException("No se encontro genero con el id: "+personage.getGender().getId()));
     }
     
 }

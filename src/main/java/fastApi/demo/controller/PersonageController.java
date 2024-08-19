@@ -53,6 +53,7 @@ public class PersonageController {
     
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deletePersonage(@PathVariable("id") Integer id){
+        personageS.deletePersonage(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Personaje eliminado");
     }
 }

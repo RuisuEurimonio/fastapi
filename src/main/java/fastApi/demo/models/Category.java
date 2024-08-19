@@ -5,6 +5,9 @@
  */
 package fastApi.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import fastApi.demo.Validations.OnCreate;
+import fastApi.demo.Validations.OnUpdate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,12 +37,12 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Size(min = 5, max = 50, message = "El nombre debe tener entre 5 y 50 carácteres.")
-    @NotBlank
+    @Size(min = 5, max = 50, message = "El nombre debe tener entre 5 y 50 carácteres.", groups = {OnCreate.class, OnUpdate.class})
+    @NotBlank(message = "El nombre no debe estar vacío", groups = OnCreate.class)
     private String name;
     
-    @Size(min = 5, max = 150, message = "La descripción debe tener entre 5 y 150 carácteres.")
-    @NotBlank
+    @Size(min = 5, max = 150, message = "La descripción debe tener entre 5 y 150 carácteres.", groups = {OnCreate.class, OnUpdate.class})
+    @NotBlank(message = "La descripción no debe estar vacío", groups = OnCreate.class)
     private String description;
     
     @CreationTimestamp
@@ -51,6 +54,7 @@ public class Category {
     private LocalDateTime updateDate;
     
     @ManyToMany(mappedBy = "categories")
+    @JsonIgnoreProperties(value="categories")
     private List<Anime> animes;
     
 }
