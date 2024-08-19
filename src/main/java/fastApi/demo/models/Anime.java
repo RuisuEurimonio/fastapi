@@ -17,6 +17,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -47,7 +48,7 @@ public class Anime {
     private boolean finished;
     
     @Column(nullable = true)
-    @Size(min = 10, message = "El link de la imagen no es valido")
+    @Size(min = 10, message = "El link de la imagen no es valido.")
     private String image;
     
     @Column(nullable = true)

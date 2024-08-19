@@ -36,7 +36,7 @@ public class AnimeService {
     }
     
     public Anime createAnime(Anime anime){
-        if(anime == null) throw new CustomException("No se ingresaron datos.");
+        if(anime == null || anime.getName() == null) throw new CustomException("No se ingresaron datos.");
         return animeR.createAnime(anime);
     }
     

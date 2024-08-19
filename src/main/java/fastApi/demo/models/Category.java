@@ -10,12 +10,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,7 +38,7 @@ public class Category {
     @NotBlank
     private String name;
     
-    @Size(min = 5, max = 150, message = "La descripción debe tener entre 5 y 150 carácteres")
+    @Size(min = 5, max = 150, message = "La descripción debe tener entre 5 y 150 carácteres.")
     @NotBlank
     private String description;
     

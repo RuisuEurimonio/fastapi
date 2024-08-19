@@ -26,7 +26,8 @@ public class CategoryService {
         return categoryR.getAllCategory();
     }
     
-    public Category getById(int id){
+    public Category getById(Integer id){
+        if(id == null) throw new CustomException("El id no se ingreso.");
         Category categoryDB = categoryR.getById(id).orElseThrow(()-> new CustomException("No se encontró ningúna categoria con id: "+id));
         return categoryDB;
     }
@@ -40,7 +41,7 @@ public class CategoryService {
         return categoryR.updateCategory(category);
     }
     
-    public void deleteCategory(int id){
+    public void deleteCategory(Integer id){
         categoryR.getById(id).orElseThrow(()-> new CustomException("No se encontro la categoria a eliminar"));
         categoryR.deleteByIdCategory(id);
     }
