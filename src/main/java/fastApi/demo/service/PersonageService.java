@@ -21,17 +21,34 @@ import org.springframework.stereotype.Service;
 public class PersonageService {
     
     @Autowired
-    private PersonageRepository characterR;
+    private PersonageRepository personageR;
     
     public List<Personage> getAll(){
-        return characterR.getAllCharacters();
+        return personageR.getAllCharacters();
     }
     
-    public Optional<Personage> getById(int id){
-        characterR.getById(id).orElseThrow(()-> new CustomException("No se encontró ningún personaje con el id: "+id));
-        return characterR.getById(id);
+    public Personage getById(int id){
+        Personage personageDB = personageR.getById(id).orElseThrow(()-> new CustomException("No se encontró ningún personaje con el id: "+id));
+        return personageDB;
     }
     
+    public Personage createPersonage(Personage personage){
+        if(personage == null || personage.getName() == null || personage.getGender() == null || personage.getAnime() == null){
+            throw new CustomException("Ingresa el nombre, genero y anime");
+        }
+        return personageR.createCharacter(personage);
+    }
     
+    public Personage updatePersonage(Personage personage){
+        if(personage == null || personage.getId() == null || personage.getName() == null || personage.getGender() == null || personage.getAnime() == null){
+            throw new CustomException("Verifica que los campos no sean nulos.");
+        }
+        return personageR.updateCharacter(personage);
+    }
+    
+    public void deletePersonage(Integer id){
+        if(id == null) throw new CustomException("El id no puede ser nulo.");
+        personageR.deleteByIdCharacter(id);
+    }
     
 }
