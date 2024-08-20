@@ -9,7 +9,6 @@ import fastApi.demo.Validations.OnCreate;
 import fastApi.demo.Validations.OnUpdate;
 import fastApi.demo.models.Gender;
 import fastApi.demo.service.GenderService;
-import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -5,14 +5,16 @@
  */
 package fastApi.demo.controller;
 
+import fastApi.demo.Validations.OnCreate;
+import fastApi.demo.Validations.OnUpdate;
 import fastApi.demo.models.Anime;
 import fastApi.demo.service.AnimeService;
 import jakarta.validation.Valid;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,12 +46,12 @@ public class AnimeController {
     }
     
     @PostMapping("/create")
-    public ResponseEntity<Anime> createAnime(@Valid @RequestBody Anime anime){
+    public ResponseEntity<Anime> createAnime(@Validated(OnCreate.class) @RequestBody Anime anime){
         return ResponseEntity.status(HttpStatus.CREATED).body(animeS.createAnime(anime));
     }
     
     @PutMapping("/update")
-    public ResponseEntity<Anime> updateAnime(@Valid @RequestBody Anime anime){
+    public ResponseEntity<Anime> updateAnime(@Validated(OnUpdate.class) @RequestBody Anime anime){
         return ResponseEntity.status(HttpStatus.CREATED).body(animeS.updateAnime(anime));
     }
     

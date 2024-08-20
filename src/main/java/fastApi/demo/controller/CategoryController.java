@@ -7,9 +7,7 @@ package fastApi.demo.controller;
 
 import fastApi.demo.Validations.OnCreate;
 import fastApi.demo.Validations.OnUpdate;
-import fastApi.demo.models.Anime;
 import fastApi.demo.models.Category;
-import fastApi.demo.service.AnimeService;
 import fastApi.demo.service.CategoryService;
 import jakarta.validation.Valid;
 import java.util.List;

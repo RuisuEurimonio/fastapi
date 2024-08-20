@@ -5,12 +5,15 @@
  */
 package fastApi.demo.controller;
 
+import fastApi.demo.Validations.OnCreate;
+import fastApi.demo.Validations.OnUpdate;
 import fastApi.demo.models.Personage;
 import fastApi.demo.service.PersonageService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,12 +45,12 @@ public class PersonageController {
     }
     
     @PostMapping("/create")
-    public ResponseEntity<Personage> createPersonage(@RequestBody Personage personage){
+    public ResponseEntity<Personage> createPersonage(@Validated(OnCreate.class) @RequestBody Personage personage){
         return ResponseEntity.status(HttpStatus.CREATED).body(personageS.createPersonage(personage));
     }
     
     @PutMapping("/update")
-    public ResponseEntity<Personage> updatePersonage(@RequestBody Personage personage){
+    public ResponseEntity<Personage> updatePersonage(@Validated(OnUpdate.class) @RequestBody Personage personage){
         return ResponseEntity.status(HttpStatus.CREATED).body(personageS.updatePersonage(personage));
     }
     

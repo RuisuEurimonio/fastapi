@@ -49,13 +49,20 @@ public class PersonageService {
     }
     
     public Personage updatePersonage(Personage personage){
-        if(personage == null || personage.getId() == null || personage.getName() == null || personage.getGender() == null || personage.getAnime() == null){
+        if(personage == null || personage.getId() == null){
             throw new CustomException("Verifica que los campos no sean nulos.");
         }
+        
         Personage personageDB = personageR.getById(personage.getId()).orElseThrow(()-> new CustomException("El personaje a modificar no se encontro"));
-        personage.setCreateDate(personageDB.getCreateDate());
-        validateRelations(personage);
-        return personageR.updateCharacter(personage);
+        
+        if(personage.getName() != null) personageDB.setAnime(personage.getAnime());
+        if(personage.getGender() != null) personageDB.setGender(personage.getGender());
+        if(personage.getAnime() != null) personageDB.setAnime(personage.getAnime());
+        if(personage.getImage() != null) personageDB.setImage(personage.getImage());
+        
+        validateRelations(personageDB);
+        
+        return personageR.updateCharacter(personageDB);
     }
     
     public void deletePersonage(Integer id){
@@ -64,6 +71,7 @@ public class PersonageService {
     }
     
     public void validateRelations(Personage personage){
+        if(personage.getAnime() == null || personage.getGender() == null ) throw new CustomException("El anime y genero son necesarios.");
         animeR.getById(personage.getAnime().getId()).orElseThrow(()-> new CustomException("No se encontro anime con el id: " + personage.getAnime().getId()));
         genderR.getByIdGender(personage.getGender().getId()).orElseThrow(()-> new CustomException("No se encontro genero con el id: "+personage.getGender().getId()));
     }

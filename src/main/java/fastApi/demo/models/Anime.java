@@ -6,6 +6,7 @@
 package fastApi.demo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import fastApi.demo.Validations.OnCreate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,7 +19,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,8 +40,8 @@ public class Anime {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
     
-    @NotNull
-    @NotBlank
+    @NotNull(message = "El nombre es necesario", groups = OnCreate.class)
+    @NotBlank(message = "El nombre es necesario", groups = OnCreate.class)
     @Size(min = 3, max = 150, message = "El nombre debe estar entre 3 y 150 caracteres.")
     private String name;
     
