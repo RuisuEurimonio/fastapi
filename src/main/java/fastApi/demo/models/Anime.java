@@ -52,7 +52,7 @@ public class Anime {
     @Size(min = 10, message = "El link de la imagen no es valido.")
     private String image;
     
-    @Column(nullable = true)
+    @Column(nullable = true, name = "\"year\"")
     private LocalDateTime year;
     
     @CreationTimestamp
