@@ -37,7 +37,7 @@ public class AnimeController {
     
     @GetMapping("/all")
     public ResponseEntity<List<Anime>> getAllAnimes(){
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(animeS.getAllAnime());
+        return ResponseEntity.status(HttpStatus.OK).body(animeS.getAllAnime());
     }
     
     @GetMapping("/{id}")
