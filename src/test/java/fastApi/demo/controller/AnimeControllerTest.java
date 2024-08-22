@@ -39,7 +39,8 @@ public class AnimeControllerTest {
 	@Test
 	void shouldGetAnimesAllReturnIsOk() throws Exception{
             mockMvc.perform(get("/api/animes/all"))
-                    .andExpect(status().isOk());
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.length()").value(5));
         }
         
         @Test
@@ -52,7 +53,20 @@ public class AnimeControllerTest {
                     .content(newAnimeJson))
                     .andExpect(status().isCreated())
                     .andExpect(jsonPath("$.name").value("One piece"))
-                    .andExpect(jsonPath("$.finished").value("true"));
+                    .andExpect(jsonPath("$.finished").value("true"))
+                    .andExpect(jsonPath("$.id").value(6));
+        }
+        
+        @Test
+        void shouldCreateAnimeReturnIsNotOk() throws Exception{
+            String newAnimeJson = "{\"finished\": \"false\"}";
+            
+            mockMvc.perform(post("/api/animes/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(newAnimeJson))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.name").value("El nombre es necesario"));
+                    
         }
     
 }
