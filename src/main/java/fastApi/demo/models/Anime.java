@@ -7,6 +7,7 @@ package fastApi.demo.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import fastApi.demo.Validations.OnCreate;
+import fastApi.demo.Validations.OnUpdate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,14 +43,14 @@ public class Anime {
     
     @NotNull(message = "El nombre es necesario", groups = OnCreate.class)
     @NotBlank(message = "El nombre es necesario", groups = OnCreate.class)
-    @Size(min = 3, max = 150, message = "El nombre debe estar entre 3 y 150 caracteres.")
+    @Size(min = 3, max = 150, message = "El nombre debe estar entre 3 y 150 caracteres.", groups = {OnCreate.class, OnUpdate.class})
     private String name;
     
-    
+    @NotNull(message = "El estado es necesario", groups = OnCreate.class)
     private Boolean finished;
     
     @Column(nullable = true)
-    @Size(min = 10, message = "El link de la imagen no es valido.")
+    @Size(min = 10, message = "El link de la imagen no es valido.", groups = {OnCreate.class, OnUpdate.class})
     private String image;
     
     @Column(nullable = true, name = "\"year\"")
