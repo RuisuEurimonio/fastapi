@@ -21,6 +21,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -122,6 +124,7 @@ public class AnimeControllerTest {
         }
     
         @Test
+        @DisplayName("Tried to create a new anime, but the image field is too short, the validation failed and returned a bad request with an error message")
         void createdAnime_CreateAnimeWithNotValidImage_ReturnIsBadRequest() throws Exception{
             String newAnimeJson = "{\"id\":4, \"name\": \"Tokidoki Bosotto Russia-go de Dereru Tonari no Alya-san\",\"finished\":false, \"image\": \"http\"}";
             
@@ -130,5 +133,83 @@ public class AnimeControllerTest {
                 .content(newAnimeJson))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.image").value("El link de la imagen no es valido."));
+        }
+        
+        @Test
+        @DisplayName("Update anime with id 4 with a new name, returned a created status")
+        void updateAnime_UpdateAnimeRename_ReturnIsAccepted() throws Exception{
+            String expected = "{\"id\":4, \"name\": \"Tokidoki Bosotto Russia-go\",\"finished\":false}";
+            String modifyJson = "{\"id\":4,\"name\":\"Tokidoki Bosotto Russia-go\"}";
+            
+            mockMvc.perform(put("/api/animes/update")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(modifyJson))
+                    .andExpect(status().isCreated())
+                    .andExpect(content().json(expected));
+        }
+        
+        @Test
+        @DisplayName("Update anime with id 4 change the finished state, returned a created status")
+        void updateAnime_UpdateChangeTheFinished_ReturnIsAccepted() throws Exception{
+            String expected = "{\"id\":4, \"name\": \"Tokidoki Bosotto Russia-go de Dereru Tonari no Alya-san\",\"finished\":true}";
+            String modifyJson = "{\"id\":4,\"finished\":true}";
+            
+            mockMvc.perform(put("/api/animes/update")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(modifyJson))
+                    .andExpect(status().isCreated())
+                    .andExpect(content().json(expected));
+        }
+        
+        @Test
+        @DisplayName("Update anime with a new image, returned a created status")
+        void updateAnime_changeImage_ReturnIsAccepted() throws Exception{
+            String expected = "{\"id\":4, \"name\": \"Tokidoki Bosotto Russia-go de Dereru Tonari no Alya-san\",\"finished\":false, \"image\": \"http://localHost/img/12535\"}";
+            String modifyJson = "{\"id\":4, \"image\": \"http://localHost/img/12535\"}";
+            
+            mockMvc.perform(put("/api/animes/update")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(modifyJson))
+                    .andExpect(status().isCreated())
+                    .andExpect(content().json(expected));
+            
+        }
+        
+        @Test
+        @DisplayName("Update anime with a new data in general, returned a created status.")
+        void updateAnime_changeCompleteData_ReturnIsAccepted() throws Exception{
+            String expected = "{\"id\":4, \"name\": \"Tonari no Alya-san\",\"finished\":true, \"image\": \"http://localHost/img/54321\"}";
+            String modifyJson = "{\"id\":4, \"name\": \"Tonari no Alya-san\",\"finished\":true, \"image\": \"http://localHost/img/54321\"}";
+            
+            mockMvc.perform(put("/api/animes/update")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(modifyJson))
+                    .andExpect(status().isCreated())
+                    .andExpect(content().json(expected));
+                    
+        }
+        
+        @Test
+        @DisplayName("Update anime with a new data in general but without id, returned a bad request status.")
+        void updateAnime_changeCompleteDataWithoutId_ReturnIsBadRequest() throws Exception{
+            String modifyJson = "{\"name\": \"Tonari no Alya-san\",\"finished\":true, \"image\": \"http://localHost/img/54321\"}";
+            
+            mockMvc.perform(put("/api/animes/update")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(modifyJson))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(content().string("No se ingreso un id"));
+                    
+        }
+        
+        @Test
+        @DisplayName("Update anime without data, returned a bad request status.")
+        void updateAnime_WithoutData_ReturnIsBadRequest() throws Exception{
+            
+            mockMvc.perform(put("/api/animes/update")
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(content().string("Ha sucedido un error, vuelvelo a intentar"));
+                    
         }
 }

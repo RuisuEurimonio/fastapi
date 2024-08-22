@@ -39,7 +39,7 @@ public class Anime {
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     
     @NotNull(message = "El nombre es necesario", groups = OnCreate.class)
     @NotBlank(message = "El nombre es necesario", groups = OnCreate.class)

@@ -41,6 +41,7 @@ public class AnimeService {
     
     public Anime updateAnime(Anime anime){
         if(anime == null) throw new CustomException("No se ingresaron datos.");
+        if(anime.getId() == null) throw new CustomException("No se ingreso un id");
         Anime animeDB = animeR.getById(anime.getId()).orElseThrow(()-> new CustomException("No se encontró ningún anime con el id: "+anime.getId() ));
         
         if (anime.getName() != null) animeDB.setName(anime.getName());
