@@ -205,11 +205,25 @@ public class AnimeControllerTest {
         @Test
         @DisplayName("Update anime without data, returned a bad request status.")
         void updateAnime_WithoutData_ReturnIsBadRequest() throws Exception{
-            
             mockMvc.perform(put("/api/animes/update")
                     .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
                     .andExpect(content().string("Ha sucedido un error, vuelvelo a intentar"));
                     
+        }
+        
+        @Test
+        @DisplayName("Delete anime with id 1 returned a no content status")
+        void deleteAnime_existData_returnNoContent() throws Exception{
+            mockMvc.perform(delete("/api/animes/delete/1"))
+                    .andExpect(status().isNoContent());
+        }
+        
+        @Test
+        @DisplayName("Deleting anime with ID 9999999 returned a bad request because the anime with ID 999999 does not exist.")
+        void deleteAnime_notExistData_returnBadRequest() throws Exception{
+            mockMvc.perform(delete("/api/animes/delete/999999"))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(content().string("No se encontró ningún anime con el id: 999999"));
         }
 }
